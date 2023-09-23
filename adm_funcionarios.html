@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+</head>
+<body>
+    <header class="descricao_titulo">
+        <p>FUNCIONÁRIOS</p>
+    </header>
+    <main>
+        <div class="botoes_superiores_navegacao">
+            <nav>
+                <a class="adm_botao_ativo" href="tela-principal.html">SAIR</a>
+            </nav>
+            <nav>
+                <a class="adm_botao_ativo" href="adm_estoque.html">ESTOQUE</a>
+            </nav>
+            <nav>
+                <a class="adm_botao_ativo" href="adm_clientes.html">CLIENTES</a>
+            </nav>
+            <nav>
+                <a class="adm_botao_inativo">FUNCIONÁRIOS</a>
+            </nav>
+            <nav>
+                <a class="adm_botao_ativo" href="adm_vendas.html">VENDAS</a>
+            </nav>
+        </div>
+        <div class="botoes_inferiores_edicao_2">
+            <input type="button" title="Cria novo item" id = "criaItem" value = add class="botao_edicao material-symbols-outlined" onclick="criaItem()"> 
+            <input type="button" title="Apaga item" id = "apagaItem" value = delete class="botao_edicao material-symbols-outlined edicao_nao_ativo" onclick="apagaItem()">
+            <input type="button" title="Edita item" id = "editaItem" value = edit class="botao_edicao material-symbols-outlined edicao_nao_ativo" onclick="editaItem()"> 
+        </div>
+        <div class="edicao_container_um">
+            <div>
+                <table class="edicao_tabela_titulo">
+                    <tbody>
+                            <th>ID<span class="material-symbols-outlined" id="organiza_col_zero">sort</span></th>
+                            <th>Nome<span class="material-symbols-outlined" id="organiza_col_um">sort</span></th>
+                            <th>Cargo<span class="material-symbols-outlined" id="organiza_col_dois">sort</span></th>
+                            <th>Login<span class="material-symbols-outlined" id="organiza_col_tres">sort</span></th>
+                            <th>Senha</th>
+                    </tbody>
+                </table>
+            </div>
+            <div class="edicao_container_dois">
+                <table class="edicao_tabela_titulo" id="itens_edicao"></table>
+            </div>
+        </div>
+    </main>
+    <script src="js/adm_funcionarios.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body id="tela_principal">
+    <header class="descricao_titulo">
+        <p>TELA PRINCIPAL</p>
+    </header>
+    <main>
+    <div class="tp_botoes_navegacao">
+        <button class="tp_sair" onclick="sairTela()">SAIR DO SISTEMA</button>
+        <a class="tp_administrador funcao_esconder" href=adm_estoque.html>ADMINISTRADOR</a>
+        <a class="tp_vendas" href="tela-cpf.html">VENDAS</a>
+    </div>
+    <div class="tp_popup_conteudo funcao_esconder" id="tp_sair_popup">
+        <div class="cabecalho_popup">
+            <p>SAIR DO SISTEMA?</p>
+        </div>
+        <div class="corpo_popup">
+            <button class="tp_popup_nao" href="#" onclick=sairPopup()>NÃO</button>
+            <a class="tp_popup_sim" href="index.html">SIM</a>
+        </div>
+    </div> 
+    </main>
+    <footer class="opcoes_teclado">
+        <section class="controle_teclado_um">
+            <p class="tecla_ativa">(F1) Sair do sistema</p>
+            <p class="tecla_ativa">(F2) Sistema de vendas</p>
+            <p class="tecla_esc funcao_esconder">(ESC) Não</p>
+        </section>
+        <section class="controle_teclado_dois">
+            <p class="tecla_opcional">(F3) Sistema administrador</p>
+            <p class="tecla_enter funcao_esconder">(ENTER) Sim</p>
+        </section>
+    </footer>
+    <script src="js/tela-principal.js"></script>
+    </body>
+    </html>

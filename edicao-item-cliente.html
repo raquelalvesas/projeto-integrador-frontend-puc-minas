@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+</head>
+<body>
+    <header class="descricao_titulo">
+        <p>EDIÇÃO DE ITEM DA LISTA DE CLIENTES</p>
+    </header>
+    <main>
+        <div class="novcl_container_um">
+            <form class="novcl_nome_cliente" id="nomeCliente">
+                <label class="novcli_cadastro_etiqueta" for="nome">Nome
+                <input class="caixa_cadastro_grande" type="text" name="nome" id="nome">
+            </form>
+            <form class="novcl_padrao_form" id="dataNascimento">
+                <div>
+                    <label class="novcli_cadastro_etiqueta" for="nascimento">Data de nascimento
+                    <input class="caixa_cadastro_media" type="text" name="nascimento" id="nascimento">
+                </div>
+                <label class="novcli_cadastro_etiquetaesq" for="cpf">CPF
+                <input class="caixa_cadastro_media" type="text" name="cpf" id="cpf">
+            </form>
+        </div>
+        <div class="novcl_container_um">
+            <form type="number" class="novcl_padrao_form" id="telefoneCliente">
+                <div>
+                    <label class="novcli_cadastro_etiqueta" for="telefone">Telefone
+                    <input class="caixa_cadastro_media" type="text" name="telefone" id="telefone">
+                </div>
+                <label class="novcli_cadastro_etiquetaesq" for="email">Email
+                <input class="caixa_cadastro_media" type="text" name="email" id="email">
+            </form>
+        </div>
+        <div class="novcl_container_um">
+            <form class="novcl_padrao_form" type="text" id="enderecoCliente">
+                <label class="novcli_cadastro_etiqueta" for="endereco">Endereço
+                <input class="caixa_cadastro_grande" type="text" name="endereco" id="endereco">
+            </form>
+            <form type="text" class="novcl_padrao_form" id="cidadeCliente">
+                <div>
+                    <label class="novcli_cadastro_etiqueta" for="cidade">Cidade
+                    <input class="caixa_cadastro_media" type="text" name="cidade" id="cidade">
+                </div>
+                <div class="novcl_subcontainer_um">
+                    <label class="novcli_cadastro_etiquetaesq" for="estado">Estado
+                    <input class="caixa_cadastro_pequena" type="text" name="estado" id="estado">
+                </div>
+                <label class="novcli_cadastro_etiquetaesq" for="cep">CEP
+                <input class="caixa_cadastro_pequena" type="text" name="cep" id="cep">
+            </form>
+        </div>
+        <div class="novcl_container_dois">
+            <div class="nvestoque_subcontainer_j"></div>
+                <nav>
+                    <a class="botao_nvestoque_voltar" href="adm_clientes.html">VOLTAR</a>
+                </nav>
+                <form action="" id="novo_produto">
+                    <input type="button" value = "CONFIRMAR" class="botao_nvestoque_confirmar" onclick="confirmaCadastro()">
+                </form>     
+            </div>
+        </div>
+    </main>
+    <script src="js/edicao-item-cliente.js"></script>
+</body>
+</html>

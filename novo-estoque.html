@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+</head>
+<body>
+    <header class="descricao_titulo">
+        <p>CADASTRO DE ITEM DE ESTOQUE</p>
+    </header>
+    <main>
+        <div class="container_formulario_esquerda">           
+            <form action="" id="novo_produto">
+                    <label class="titulo_caixa" for="produto">Produto
+                    <input class="caixa_cadastro_grande" type="text" name="produto" id="produto">
+                    <div class="novo_estoque_tres">
+                        <div class="nvestoque_subcontainer_i">
+                            <img class="nv_foto_produto" src="./assets/pao.png" alt="Foto do Produto" id="foto_produto">
+                            <label for="carrega_foto" class="botao_carregar_foto">CARREGAR FOTO</label>
+                            <input id="carrega_foto" type="file" accept=".jpg, .jpeg, .png"/>
+                        </div>
+                    </div>  
+                    <div class="formulario_tres_campos">
+                        <label class="titulo_caixa" for="codigo">Código de barras
+                        <input class="caixa_cadastro_media" type="text" name="codigo" id="codigo">
+                    </div>
+                    <div class="formulario_tres_campos">
+                        <label class="titulo_caixa" for="vencimento">Vencimento (mm-dd-aaaa)
+                        <input class="caixa_cadastro_pequena" type="text" name="vencimento" id="vencimento">
+                    </div>
+                    <div class="formulario_tres_campos">
+                    <label class="titulo_caixa" for="lote">Lote
+                    <input class="caixa_cadastro_media" type="number" name="lote" id="lote">
+                    </div>
+                    <div class="formulario_tres_campos">
+                        <label class="titulo_caixa" for="valor">Valor de venda
+                        <input class="caixa_cadastro_pequena" type="number" name="valor" id="valor">
+                    </div>
+                    <div class="formulario_tres_campos">
+                        <label class="titulo_caixa" for="quantidade">Quantidade
+                        <input class="caixa_cadastro_pequena" type="number" name="quantidade" id="quantidade">
+                    </div>
+                    <div class="formulario_tres_campos">
+                        <label class="titulo_caixa" for="situacao">Status
+                        <input class="caixa_cadastro_pequena" type="text" name="situacao" id="situacao">
+                    </div>
+                </form>
+            </div>
+            <div class="cadastro_botoes_inferiores">
+                <div class="nvestoque_subcontainer_j"></div>
+                    <nav>
+                        <a class="botao_nvestoque_voltar" href="adm_estoque.html">VOLTAR</a>
+                    </nav>
+                    <form action="" id="novo_produto">
+                        <input type="button" value = "CONFIRMAR" class="botao_nvestoque_confirmar" onclick="confirmaCadastro()">
+                    </form>     
+                </div>
+            </div>
+    </main>
+    <script src="js/novo-estoque.js"></script>
+</body>
+</html>

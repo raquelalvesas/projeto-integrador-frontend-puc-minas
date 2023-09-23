@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <header class="descricao_titulo">
+        <p>CPF DO CLIENTE</p>
+    </header>
+    <main>
+        <form action="" class= "numero_cpf" id="identificacao_cpf">
+            <label class= "titulo_cpf" for="cpf_cliente">CPF DO CLIENTE</label>
+            <input class="entrada_cpf" type="text" name="cpf_cliente" id="cpf_cliente" autofocus="autofocus">
+            <p class = "situacao_cadastro funcao_esconder" id="cliente_cadastro">Cliente não cadastrado</p>
+            <div class="cpf_botoes">
+                <input type="button" value = "TELA PRINCIPAL" class="cpf_sair" onclick="sairTela()">
+                <input type="submit" value = "INICIAR VENDA" class="cpf_vendas">
+            </div>
+        </form>
+        <div class="cpf_popup_conteudo funcao_esconder" id="tp_sair_popup">
+            <div class="cabecalho_popup">
+                <p>FECHAR O SISTEMA DE VENDAS E VOLTAR À TELA PRINCIPAL?</p>
+            </div>
+            <div class="corpo_popup">
+                <button class="tp_popup_nao" href="#" onclick=sairPopup()>NÃO</button>
+                <a class="tp_popup_sim" href="tela-principal.html">SIM</a>
+            </div>
+        </div>
+    </main>
+    <footer class="opcoes_teclado">
+        <section class="controle_teclado_um">
+            <p class="tecla_ativa">(F4) Tela principal</p>
+            <p class="tecla_esc funcao_esconder">(ESC) Não</p>
+        </section>
+        <section class="controle_teclado_dois">
+            <p class="tecla_ativa">(F5) Iniciar venda</p>
+            <p class="tecla_enter funcao_esconder">(ENTER) Sim</p>
+        </section>
+    </footer>
+    <script src="js/tela-cpf.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+</head>
+<body>
+    <header class="descricao_titulo">
+        <p>NOVA VENDA</p>
+    </header>
+    <main>
+        <div class="nv_container_um">
+            <div class="nv_subcontainer_um">
+                <div class="nv_minicontainer_um">
+                    <form action="" class= "nv_microcontainer_um" id="info_numero">
+                        <label class= "nv_titulo" for="numero_produto">NÚMERO</label>
+                        <output class="nv_saida" type="number" name="numero_produto" id="numero_produto"></output>
+                    </form>
+                    <form action="" id="info_foto">
+                        <img class="nv_foto_produto" src="./assets/pao.png" alt="Foto do Produto" id="nv_foto_produto">
+                        <input id="carrega_foto" type="file" accept=".jpg, .jpeg, .png"/>
+                    </form>
+                </div>
+                <div class="nv_minicontainer_dois">
+                    <form action="" class= "nv_microcontainer_quatro" id="info_codigo">
+                        <label class= "nv_titulo" for="cod_produto">CÓDIGO DE BARRAS</label>
+                        <input class="nv_entrada" type="number" name="cod_produto" id="cod_produto" autofocus="autofocus"></input>
+                    </form>
+                    <form action="" class= "nv_microcontainer_cinco" id="info_valor">
+                        <label class= "nv_titulo" for="valor_produto">VALOR UNITÁRIO</label>
+                        <output class="nv_saida" type="text" name="valor_produto" id="valor_produto"></output>
+                    </form>
+                    <form action="" class= "nv_microcontainer_seis" id="info_quantidade">
+                        <label class= "nv_titulo" for="quantidade_produto">QUANTIDADE</label>
+                        <input class="nv_entrada" type="number" name="quantidade_produto" id="quantidade_produto"></output>
+                    </form>
+                </div>
+            </div>
+            <div class="nv_subcontainer_dois">
+                <form action="" class= "nv_microcontainer_sete" id="info_descricao">
+                    <label class= "nv_titulo" for="descricao_produto">DESCRIÇÃO DO ITEM</label>
+                    <output class="nv_saida" type="text" name="descricao_produto" id="descricao_produto"></output>
+                </form>
+            </div>
+            <div class="nv_subcontainer_tres">
+                <div>
+                    <input type="button" value="EDITAR LISTA" class="nv_editar" onclick="editarLista()">
+                    <input type="button" value = "CANCELAR" class="nv_cancelar" onclick="sairTela()">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="nv_subcontainer_seis">
+                <p class="nv_lista_produtos">LISTA DE PRODUTOS</p>
+                <div class="nv_identificacao_cliente">
+                    <form action="" class= "nv_nome_cliente" id="info_nome">
+                        <output class="nv_saida" type="text" name="nome_cliente" id="nome_cliente"></output>
+                    </form>
+                    <form action="" class= "nv_cpf_cliente" id="info_cpf">
+                        <output class="nv_saida" type="number" name="cpf_cliente" id="cpf_cliente"></output>
+                    </form>
+                </div>
+                <div class="nv_subcontainer_quatro">
+                    <table class="nv_tabela_itens">
+                        <tbody>
+                            <tr>
+                                <th>Item</th>
+                                <th>Código</th>
+                                <th>Descrição</th>
+                                <th>Qtd</th>
+                                <th>Vlr. Unit.</th>
+                                <th>Total</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="nv_tabela_itens" id="lista"></table>
+                </div>
+            </div>
+            <div class="nv_subcontainer_sete">
+                <form action="" class= "nv_subcontainer_cinco" id="info_subtotal_compra">
+                    <label class= "nv_subtotal" for="subtotal_compra">SUBTOTAL</label>
+                    <output class="nv_saida_subtotal" type="text" name="subtotal_compra" id="subtotal_compra"></output>
+                </form>
+                <input type="button" value = "PAGAMENTO" class="nv_pagamento" onclick="pagamento()">
+            </div>
+        </div>
+        <div class="nv_popup_conteudo funcao_esconder" id="tp_sair_popup">
+            <div class="cabecalho_popup">
+                <p>CANCELAR A COMPRA?</p>
+            </div>
+            <div class="corpo_popup">
+                <button class="tp_popup_nao" href="#" onclick=sairPopup()>NÃO</button>
+                <a class="tp_popup_sim" href="tela-cpf.html">SIM</a>
+            </div>
+        </div>
+        <div class="nv_sair_pagamento funcao_esconder" id="nv_sair_pagamento">
+            <div class="cabecalho_popup">
+                <p id="nv_mensagem_finaliza_compra">FINALIZAR A COMPRA E IR PARA PAGAMENTO?</p>
+                <p id="nv_mensagem_carrinho_vazio">CARRINHO VAZIO. PRESSIONE QUALQUER TECLA PARA VOLTAR.</p>
+            </div>
+            <div class="corpo_popup">
+                <button class="tp_popup_nao" href="#" onclick=sairPagamento()>NÃO</button>
+                <button class="tp_popup_sim" href="#" onclick=finalizaCompra()>SIM</button>
+            </div>
+        </div>
+    </main>
+    <footer class="opcoes_teclado">
+        <section class="controle_teclado_um">
+            <p class="tecla_ativa">(F6) Editar lista</p>
+            <p class="tecla_ativa">(F7) Cancelar</p>
+            <p class="tecla_esc funcao_esconder">(ESC) Não</p>
+
+        </section>
+        <section class="controle_teclado_dois">
+            <p class="tecla_ativa">(F8) Pagamento</p>
+            <p class="tecla_ativa">(F9) Ler código de barras</p>
+            <p class="tecla_enter funcao_esconder">(ENTER) Sim</p>
+        </section>
+    </footer>
+    <script src="js/nova-venda.js"></script>
+</body>
+</html>

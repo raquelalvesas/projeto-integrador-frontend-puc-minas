@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+</head>
+<body>
+    <header class="descricao_titulo">
+        <p>FINALIZAÇÃO DA VENDA</p>
+    </header>
+    <main>
+        <div class="fv_popup_conteudo funcao_esconder" id="tp_sair_popup">
+            <div class="cabecalho_popup">
+                <p>CANCELAR A COMPRA?</p>
+            </div>
+        <div class="corpo_popup">
+            <button class="tp_popup_nao" href="#" onclick=sairPopup()>NÃO</button>
+            <a class="tp_popup_sim" href="tela-cpf.html">SIM</a>
+        </div>
+        </div>
+        <div class="fv_container_um">
+            <form action="" class= "fv_microcontainer_um" id="fv_cliente">
+                <label class= "nv_titulo" for="fv_nome_cliente">CLIENTE</label>
+                <output class="nv_saida" type="text" name="fv_nome_cliente" id="fv_nome_cliente"></output>
+            </form>
+            <form action="" class= "fv_microcontainer_dois" id="fv_cpf">
+                <label class= "nv_titulo" for="fv_cpf_cliente">CPF</label>
+                <output class="nv_saida" type="number" name="fv_cpf_cliente" id="fv_cpf_cliente"></output>
+            </form>
+            <form action="" class= "fv_microcontainer_tres" id="fv_saldo">
+                <label class= "nv_titulo" for="fv_saldo_compra">SALDO</label>
+                <output class="nv_saida" type="number" name="fv_saldo_compra" id="fv_saldo_compra"></output>
+            </form>
+            <form action="" class= "fv_microcontainer_quatro"></formaction>
+                <input type="button" value = "DINHEIRO" class="fv_botao_pagamento" onclick="pagamentoDinheiro()">
+                <input type="button" value = "CARTÃO" class="fv_botao_pagamento" onclick="pagamentoCartao()">
+            </form>
+            <div class = "fv_microcontainer_cinco">
+                <form action="" class= "fv_microcontainer_seis funcao_esconder" id="fv_recebido">
+                    <label class= "nv_titulo" for="fv_valor_recebido">RECEBIDO</label>
+                    <input class="fv_entrada" type="number" name="fv_valor_recebido" id="fv_valor_recebido"></input>
+                </form>
+                <form action="" class= "fv_microcontainer_sete funcao_esconder" id="fv_troco">
+                    <label class= "nv_titulo" for="fv_total_troco">TROCO</label>
+                    <output class="nv_saida" type="number" name="fv_total_troco" id="fv_total_troco"></output>
+                </form>
+            </div>
+                <form class="fv_microcontainer_oito">
+                    <input type="button" value = "EDITAR LISTA" class="fv_edita" onclick="editarLista()">
+                    <input type="button" value = "CANCELAR" class="fv_cancela" onclick="sairTela()">
+                <div class="fv_microcontainer_nove">
+                    <p class = "fv_abre_caixa funcao_esconder">Abrindo caixa</p>
+                    <p class = "fv_maquininha funcao_esconder">Siga as instruções da maquininha</p>
+                    <input type="button" value = "RECEBIDO" class="fv_pagamento_recebido funcao_esconder" id = "botao_recebido" onclick="pagamentoRecebido()">
+                </div>
+                </form>
+        </div>
+        <div class="fv_container_dois">
+            <p class="nv_lista_produtos">LISTA DE PRODUTOS</p>
+            <div class="nv_identificacao_cliente">
+                <form action="" class= "nv_nome_cliente" id="info_nome">
+                    <output class="nv_saida" type="text" name="nome_cliente" id="nome_cliente"></output>
+                </form>
+                <form action="" class= "nv_cpf_cliente" id="info_cpf">
+                    <output class="nv_saida" type="number" name="cpf_cliente" id="cpf_cliente"></output>
+                </form>
+            </div>
+            <div class="fv_microcontainer_dez">
+                <table class="nv_tabela_itens">
+                    <tbody>
+                        <tr>
+                            <th>Item</th>
+                            <th>Código</th>
+                            <th>Descrição</th>
+                            <th>Qtd</th>
+                            <th>Vlr. Unit.</th>
+                            <th>Total</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="nv_tabela_itens" id="lista"></table>
+            </div>
+        </div>
+    </main>
+    <footer class="opcoes_teclado">
+        <section class="controle_teclado_um">
+            <p class="tecla_editar funcao_esconder">(F6) Editar lista</p>
+            <p class="tecla_cancelar funcao_esconder">(F7) Cancelar</p>
+            <p class="tecla_esc funcao_esconder">(ESC) Não</p>
+            <p class="tecla_enter funcao_esconder">(ENTER) Sim</p>
+            <p class="tecla_recebido funcao_esconder">(F11) Recebido</p>
+        </section>
+        <section class="controle_teclado_dois">
+            <p class="tecla_dinheiro">(F9) Pagamento em dinheiro</p>
+            <p class="tecla_cartao">(F10) Pagamento em cartão</p>
+        </section>
+    </footer>
+    <script src="js/finaliza-venda.js"></script>
+</body>
+</html>

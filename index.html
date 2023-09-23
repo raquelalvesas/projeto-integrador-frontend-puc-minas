@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>MERCADO ALVES</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="body_primeira_pagina">
+    <header class="nome_do_mercado">
+        <p>MERCADO ALVES</p>
+    </header>
+    <main>
+        <div class="caixa_login">
+            <p class="titulo_acesso">Acesso para administradores e funcionários</p>
+            <form action="" class="caixa_usuario_senha" id="acesso_usuario_senha">
+                <label class="titulo_autenticacao" for="nome_usuario">Usuário</label>
+                <input class="entrada_autenticacao" type="text" name="nome_usuario" id="nome_usuario">
+                <div>
+                    <label class="titulo_autenticacao" for="senha_usuario">Senha</label>
+                    <input type="password" value="FakePWS" class="entrada_autenticacao" type="text" name="senha_usuario" id="senha_usuario">
+                    <p class = "situacao_cadastro funcao_esconder" id="usuario_cadastro">Usuário não cadastrado</p>
+                    <p class = "situacao_cadastro funcao_esconder" id="erro_autorizacao">Erro no sistema. Contate o suporte</p>
+                    <input class="botao_entrar" type="submit" value="ENTRAR">
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+</html>

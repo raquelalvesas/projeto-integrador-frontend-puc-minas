@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+</head>
+<body>
+    <header class="descricao_titulo">
+        <p>EDIÇÃO DE ITEM DE FUNCIONÁRIOS</p>
+    </header>
+    <main>
+        <div class="novcl_container_um">
+            <form class="novcl_nome_cliente" id="nomeCliente">
+                <label class="novcli_cadastro_etiqueta" for="nomeFuncionario">Nome
+                <input class="caixa_cadastro_padraoum" type="text" name="nomeFuncionario" id="nomeFuncionario">
+            </form>
+            <form class="novcl_padrao_form" id="dataNascimento">
+                <div>
+                    <label class="novcli_cadastro_etiqueta" for="idFuncionario">ID
+                    <output class="caixa_cadastro_padraodois" type="text" name="idFuncionario" id="idFuncionario">
+                </div>
+                <label class="novcli_cadastro_etiquetaesq" for="cargoFuncionario">Cargo
+                <input class="caixa_cadastro_padraotres" type="text" name="cargoFuncionario" id="cargoFuncionario">
+            </form>
+        </div>
+        <div class="novcl_container_um">
+            <form type="number" class="novcl_padrao_form" id="telefoneCliente">
+                <div>
+                    <label class="novcli_cadastro_etiqueta" for="loginFuncionario">Login
+                    <input class="caixa_cadastro_padraodois" type="text" name="loginFuncionario" id="loginFuncionario">
+                </div>
+                <label class="novcli_cadastro_etiquetaesq" for="senhaFuncionario">Senha
+                <input class="caixa_cadastro_padraotres" type="text" name="senhaFuncionario" id="senhaFuncionario">
+            </form>
+        </div>
+        <div class="novcl_container_dois">
+            <div class="nvestoque_subcontainer_j"></div>
+                <nav>
+                    <a class="botao_nvestoque_voltar" href="adm_funcionarios.html">VOLTAR</a>
+                </nav>
+                <form action="" id="novo_produto">
+                    <input type="button" value = "CONFIRMAR" class="botao_nvestoque_confirmar" onclick="confirmaCadastro()">
+                </form>     
+            </div>
+        </div>
+    </main>
+    <script src="js/edicao-item-funcionario.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+</head>
+<body>
+    <header class="descricao_titulo">
+        <p>CADASTRO DE CLIENTE</p>
+    </header>
+    <main>
+        <div class="novo_estoque_um">             
+            <form action="" id="novo_produto">
+                <label class="titulo_caixa" for="nome">Nome
+                <input class="caixa_cadastro_grande" type="text" name="nome" id="nome">
+                <div class="formulario_dois_campos_esq">
+                    <label class="titulo_caixa" for="nascimento">Nascimento (mm-dd-aaaa)
+                    <input class="caixa_cadastro_media" type="text" name="nascimento" id="nascimento">
+                </div>
+                <div class="formulario_dois_campos_dir">
+                    <label class="titulo_caixa" for="cpf">CPF
+                    <input class="caixa_cadastro_media" type="number" name="cpf" id="cpf">
+                </div>
+                <div class="formulario_dois_campos_esq">
+                    <label class="titulo_caixa" for="telefone">Telefone
+                    <input class="caixa_cadastro_media" type="number" name="telefone" id="telefone">
+                </div>
+                <div class="formulario_dois_campos_dir">
+                    <label class="titulo_caixa" for="email">Email
+                    <input class="caixa_cadastro_media" type="text" name="email" id="email">
+                </div>
+                <div>
+                    <label class="titulo_caixa" for="endereco">Endereço
+                    <input class="caixa_cadastro_grande" type="text" name="endereco" id="endereco">
+                </div>
+                <div class="formulario_dois_campos_esq">
+                    <label class="titulo_caixa" for="cidade">Cidade
+                    <input class="caixa_cadastro_pequena" type="text" name="cidade" id="cidade">
+                </div>
+                <div class="formulario_tres_campos">
+                    <label class="titulo_caixa" for="estado">Estado
+                    <input class="caixa_cadastro_pequena" type="text" name="estado" id="estado">
+                </div>
+                <div class="formulario_tres_campos">
+                    <label class="titulo_caixa" for="cep">CEP
+                    <input class="caixa_cadastro_pequena" type="number" name="cep" id="cep">
+                </div>
+            </form>   
+        </div>
+        <div class="cadastro_botoes_inferiores">
+            <div class="nvestoque_subcontainer_j"></div>
+                <nav>
+                    <a class="botao_nvestoque_voltar" href="adm_clientes.html">VOLTAR</a>
+                </nav>
+                <form action="" id="novo_produto">
+                    <input type="button" value = "CONFIRMAR" class="botao_nvestoque_confirmar" onclick="confirmaCadastro()">
+                </form>     
+            </div>
+        </div>
+    </main>
+    <script src="js/novo-cliente.js"></script>
+</body>
+</html>

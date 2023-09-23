@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MERCADO ALVES</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+</head>
+<body>
+    <header class="descricao_titulo">
+        <p>CUPOM FISCAL</p>
+    </header>
+    <main>
+        <div class="adm_navegacao">
+            <nav>
+                <a class="adm_botao_ativo" href="adm_vendas.html">VOLTAR</a>
+            </nav>
+            <div>
+                <a class="adm_botao_ativo" href="adm_estoque.html">ESTOQUE</a>
+            </div>
+            <nav>
+                <a class="adm_botao_ativo" href="adm_clientes.html">CLIENTES</a>
+            </nav>
+            <nav>
+                <a class="adm_botao_ativo" href="adm_funcionarios.html">FUNCIONÁRIOS</a>
+            </nav>
+            <nav>
+                <a class="adm_botao_inativo">VENDAS</a>
+            </nav>
+        </div>
+        <div class="container_informacoes_cliente">
+            <table id="detalhes_cliente"><tbody></tbody></table>
+        </div>
+        <div class="container_item_cliente">
+            <p class="titulo_tabela">CONTEÚDO</p>
+            <table class="edicao_tabela_titulo">
+                <tbody>
+                        <th>Quantidade</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container_tabela_cliente">
+                <table id="lista" class="edicao_tabela_titulo"><tbody></tbody></table>
+            </div>
+        </div>
+    </main>
+    <script src="js/cupom.js"></script>
+</body>
+</html>
