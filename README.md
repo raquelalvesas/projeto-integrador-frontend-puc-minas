@@ -1,1 +1,1 @@
-# sistema-gerenciamento-de-estoque-frontend
+# projeto-integrador-frontend-puc-minas
