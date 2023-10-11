@@ -262,6 +262,7 @@ input[type="file"] {
     width: 100vw;
     background-color: var(--cor-quaternaria);
     height: 8.6vh;   
+    overflow: hidden;
 }
 .controle_teclado_um {
     padding: 1.75vh 0px 1.75vh 1.11vw;
@@ -570,7 +571,7 @@ table.nv_tabela_itens th:nth-child(n+1) {
     overflow: hidden;
 }
 table.nv_tabela_itens th:nth-child(n+2) {
-    width: 8vw;
+    width: 10vw;
     overflow: hidden;
 }
 table.nv_tabela_itens th:nth-child(n+3) {
@@ -600,7 +601,7 @@ table.nv_tabela_itens td:nth-child(n+1) {
     overflow: hidden;
 }
 table.nv_tabela_itens td:nth-child(n+2) {
-    width: 8vw;
+    width: 10vw;
     overflow: hidden;
 }
 table.nv_tabela_itens td:nth-child(n+3) {
@@ -1106,7 +1107,7 @@ table.edicao_tabela_menor th:nth-child(n+1) {
     overflow: hidden; 
 }
 table.edicao_tabela_menor th:nth-child(n+2) {
-    min-width: 25.08vw;
+    min-width: 35.08vw;
     overflow: hidden; 
 }
 table.edicao_tabela_menor th:nth-child(n+3) {
@@ -1122,7 +1123,7 @@ table.edicao_tabela_menor th:nth-child(n+5) {
     overflow: hidden; 
 }
 table.edicao_tabela_menor th:nth-child(n+6) {
-    min-width: 15.08vw;
+    min-width: 10.08vw;
     overflow: hidden; 
 }
 table.edicao_tabela_menor th:nth-child(n+7) {
@@ -1141,7 +1142,7 @@ table.edicao_tabela_menor td:nth-child(n+1) {
     overflow: hidden; 
 }
 table.edicao_tabela_menor td:nth-child(n+2) {
-    min-width: 25.08vw;
+    min-width: 35.08vw;
     overflow: hidden; 
 }
 table.edicao_tabela_menor td:nth-child(n+3) {
@@ -1157,7 +1158,7 @@ table.edicao_tabela_menor td:nth-child(n+5) {
     overflow: hidden; 
 }
 table.edicao_tabela_menor td:nth-child(n+6) {
-    min-width: 15.08vw;
+    min-width: 10.08vw;
     overflow: hidden; 
 }
 table.edicao_tabela_menor td:nth-child(n+7) {
@@ -1171,6 +1172,7 @@ table.edicao_tabela_menor td:nth-child(n+7) {
     border-radius: 20px;
     padding-top: 0.78vh;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 .edita_linha {
     background-color: var(--cor-principal);
@@ -1519,4 +1521,7 @@ table.edicao_tabela_titulo td {
 }
 .funcao_esconder{
     display:none;
+}
+.tela_padrao {
+    overflow: hidden;
 }

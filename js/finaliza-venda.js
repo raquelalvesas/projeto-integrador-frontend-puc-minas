@@ -26,9 +26,12 @@ let teclaCancelar = document.querySelector(".tecla_cancelar");
 let saldoCompra = document.getElementById("fv_saldo_compra");
 let cpf = document.getElementById("fv_cpf_cliente");
 var cupom = 0;
+var valorTotal = 0;
+var quantidadeTotal = 0;
+var codigoProduto = "";
 
-saldoCompra.value = JSON.parse(localStorage.getItem("subtotal"));
-
+let valorSaldo = JSON.parse(localStorage.getItem("subtotal"));
+saldoCompra.value = parseFloat(valorSaldo).toFixed(2);
 var tipoPagamento = "none";
 
 teclaEditar.classList.remove("funcao_esconder");
@@ -56,10 +59,8 @@ function atualizaTabela() {
   }
 }
 
-function enviarPedido(pedido) {
-  const url = 'http://localhost:3000/';
-
-  return fetch(url, {
+function enviarPedido(acao,pedido) {
+  return fetch(`https://mercadoalves-mercado.azuremicroservices.io/${acao}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -68,32 +69,18 @@ function enviarPedido(pedido) {
   });
 }
 
-function mudarPedido(pedido) {
-  return fetch("http://localhost:3000", {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(pedido)
-  });
-}
-
-function receberResposta(pedido) {
+function receberResposta(acao,pedido) {
   const queryParams = new URLSearchParams(pedido).toString();
-  const url = `http://localhost:3000?${queryParams}`;
-
+  const url = `https://mercadoalves-mercado.azuremicroservices.io/${acao}?${queryParams}`;
   return fetch(url, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Erro na requisição. Status: ${response.status}`);
-      }
-      return response.json().catch(() => response.text());
-    })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Erro na requisição. Status: ${response.status}`);
+    }
+    return response.json().catch(() => response.text());
+  })
     .then(data => {
       if (data) {
         return data;
@@ -105,6 +92,16 @@ function receberResposta(pedido) {
       console.error('Erro:', error);
       throw new Error('Erro ao processar a resposta do servidor');
     });
+}
+
+function mudarPedido(acao,pedido) {
+  return fetch(`https://mercadoalves-mercado.azuremicroservices.io/${acao}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(pedido)
+  });
 }
 
 function pagamentoDinheiro() {
@@ -141,7 +138,7 @@ function pagamentoCartao() {
 
 function calculaTroco() {
   var valorPago = valorRecebido.value;
-  valorTroco.value = valorRecebido.value - saldoCompra.value;
+  valorTroco.value = (valorRecebido.value - saldoCompra.value).toFixed(2);
 }
 
 function editarLista() {
@@ -191,71 +188,59 @@ function sairPopup() {
 }
 
 function pagamentoRecebido() {
-  atualizaTabelaVendas();
+  if((tipoPagamento == "dinheiro" && valorTroco.value >= 0) || tipoPagamento == "cartao") {
+    atualizaTabelaVendas();
+  }
 }
 
 function atualizaTabelaVendas() {
   var data = new Date();
-  var mes = data.getMonth() + 1;
-  var dia = data.getDate();
+  console.log(data)
+  var mes = (data.getMonth() + 1).toString().padStart(2, '0');
+  var dia = data.getDate().toString().padStart(2, '0');
   var ano = data.getFullYear();
   var hora = data.getHours();
   var minutos = data.getMinutes();
-  horaVenda = hora + ":" + minutos;
+  var segundos = data.getSeconds();
+  horaVenda = hora + ":" + minutos + ":" + segundos;
   data = ano + "-" + mes + "-" + dia;
   cupom = (Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000);
   numeroVenda = `${mes}${dia}${ano}${cupom}`;
 
   pedido = {
-    action: "novaVendaRealizada",
     numeroVenda: numeroVenda,
     cpf: cpf.value,
     valorTotal: saldoCompra.value,
     data: data,
     hora: horaVenda,
     pagamento: tipoPagamento,
-    caixa: JSON.parse(localStorage.getItem("caixa"))
+    caixa: JSON.parse(localStorage.getItem("caixa")),
+    cupom: cupom
   }
-  enviarPedido(pedido)
+  acao = "vendas"
+  enviarPedido(acao,pedido)
   .then((finaliza) => finaliza.json())
   .then((finaliza) => {
-    atualizaTabelaItensVendidos();
+    atualizaQuantidadesEstoque();
   });
 }
 
-async function atualizaTabelaItensVendidos() {
-  const rowsArray = Array.from(tabelaItensVenda.rows);
-  const itensArray = [];
-  var numeroItem = 0;
-
-  rowsArray.forEach((row) => {
-    const quantidade = row.cells[3].innerHTML;
-    const codigo = row.cells[1].innerHTML;
-    const valor = row.cells[4].innerHTML;
-
-    const item = {
-      quantidade: quantidade,
-      codigo: codigo,
-      valor: valor,
-      cupom: cupom + "-" + numeroItem
-    };
-
-    itensArray.push(item);
-    numeroItem += 1;
-  });
-
+async function atualizaTabelaItensVendidos(quantidade,codigo,valorTotal,cupom) {
   const pedido = {
-    action: "novoItensVenda",
     numeroVenda: numeroVenda,
-    itens: itensArray
+    quantidade: quantidade,
+    codigo: codigo,
+    valor: valorTotal,
+    numeroCupom: cupom
   };
+  acao = "itensVenda";
 
   try {
-    const response = await enviarPedido(pedido);
+    const response = await enviarPedido(acao,pedido);
     const finaliza = await response.json();
 
     if (finaliza.status == "vendaFinalizada") {
-      atualizaQuantidadesEstoque();
+      location.href = 'venda-finalizada.html';
     }
   } catch (error) {
     console.error("Error:", error);
@@ -265,33 +250,38 @@ async function atualizaTabelaItensVendidos() {
 async function atualizaQuantidadesEstoque() {
   const rowsArray = Array.from(tabelaItensVenda.rows);
   const promises = [];
+  const itensArray = [];
+  var numeroItem = 0;
 
   rowsArray.forEach(async (row) => {
     const quantidade = parseInt(row.cells[3].innerHTML, 10);
     const codigo = row.cells[1].innerHTML;
 
     const pedidoEstoque = {
-      action: "localizaEstoque",
-      codProduto: codigo,
+      codigo: codigo
     };
+    acao = "estoque/localiza-estoque";
 
     try {
-      const produto = await receberResposta(pedidoEstoque);
-
-      const novaQuantidade = produto.quantidade - quantidade;
+      const produto = await receberResposta(acao,pedidoEstoque);
+      const novaQuantidade = produto[0].quantidade - quantidade;
       const pedidoModificaEstoque = {
-        action: "atualizaQuantidadeEstoque",
-        codigo: produto.codigo,
+        codigo: produto[0].codigo,
         quantidade: novaQuantidade
       };
-
+      acao = "estoque"
       promises.push(
-        mudarPedido(pedidoModificaEstoque)
+        mudarPedido(acao,pedidoModificaEstoque)
           .then((resposta) => resposta.json())
           .then((statusCadastro) => {
             if (statusCadastro.message == "modificado") {
-              location.href = 'venda-finalizada.html';
-            }
+              quantidadeTotal = row.cells[3].innerHTML;
+              codigoProduto = row.cells[1].innerHTML + "LOTE" + produto[0].lote;
+              valorTotal = new Number (row.cells[5].innerHTML).toFixed(2);
+              numeroCupom = cupom + "-" + numeroItem;
+              };
+              atualizaTabelaItensVendidos(quantidadeTotal,codigoProduto,valorTotal,numeroCupom);
+              numeroItem += 1;
           })
           .catch((error) => {
             console.error("Error:", error);

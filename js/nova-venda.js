@@ -13,8 +13,6 @@ const tabelaItensVenda = document.getElementById("lista");
 const total = 0;
 const conteudoPopup = document.querySelector(".nv_popup_conteudo");
 const conteudoPagamento = document.querySelector(".nv_sair_pagamento");
-const carrinhoVazio = document.getElementById("nv_mensagem_carrinho_vazio");
-const processaPagamento = document.getElementById("nv_mensagem_finaliza_compra");
 const teclaNormal = document.querySelectorAll(`[class*="tecla_ativa"]`);
 const teclaEsc = document.querySelector(".tecla_esc");
 const teclaEnter = document.querySelector(".tecla_enter");
@@ -23,20 +21,18 @@ var itensTela = 6;
 var indiceDaLinha = 0;
 tabelaTransicao = [];
 let subtotal = 0;
+acao = "estoque";
 
 cpf_cliente.value = cliente[0];
 nome_cliente.value = cliente[1];
 
-async function receberResposta(pedido) {
+async function receberResposta(acao,pedido) {
   const queryParams = new URLSearchParams(pedido).toString();
-  const url = `http://localhost:3000?${queryParams}`;
+  const url = `https://mercadoalves-mercado.azuremicroservices.io/${acao}?${queryParams}`;
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    })
     if (!response.ok) {
       throw new Error(`Erro na requisição. Status: ${response.status}`);
     }
@@ -74,62 +70,44 @@ function carregarLista() {
 
 function pagamento() {
   conteudoPagamento.classList.remove("funcao_esconder");
-  if(tabelaItensVenda.rows.length > 0) {
-    processaPagamento.classList.remove("funcao_esconder");
-    carrinhoVazio.classList.add("funcao_esconder");
-    teclaNormal.forEach(tecla => {
-      tecla.classList.add("funcao_esconder");
-    });
-    teclaEsc.classList.remove("funcao_esconder");
-    teclaEnter.classList.remove("funcao_esconder");
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        sairPagamento();
-      }
-      if (event.key === "Enter") {
-        event.preventDefault();
-        finalizaCompra();
-      }
-    });
-  } else {
-    processaPagamento.classList.add("funcao_esconder");
-    carrinhoVazio.classList.remove("funcao_esconder");
-    teclaNormal.forEach(tecla => {
-      tecla.classList.add("funcao_esconder");
-    });
-    teclaEsc.classList.remove("funcao_esconder");
-    teclaEnter.classList.remove("funcao_esconder");
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        sairPagamento();
-      }
-      if (event.key === "Enter") {
-        event.preventDefault();
-        sairPagamento();
-      }
-    });
-  }
+  teclaNormal.forEach(tecla => {
+    tecla.classList.add("funcao_esconder");
+  });
+  teclaEsc.classList.remove("funcao_esconder");
+  teclaEnter.classList.remove("funcao_esconder");
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      sairPagamento();
+    }
+    if (event.key === "Enter") {
+      event.preventDefault();
+      finalizaCompra();
+    }
+  });
 }
 
 async function atualizaCampos(codProduto) {
   pedido = {
-    action: "localizaProdutoVenda",
-    codProduto: codProduto,
+    codigo: codProduto,
   };
-  receberResposta(pedido)
+  acao = acao + "/localiza-estoque";
+  receberResposta(acao,pedido)
     .then(produto => {
+      produto = produto[0];
       nomeProduto.value = produto.produto;
-      valorVenda.value = produto.valor;
+      valorVenda.value = produto.valor.toFixed(2);
       endFoto.src = produto.foto;
       const descricao = produto.produto;
-      const codigoProduto = produto.codigo;
-      const quantidade = quantidadeItens.value;
-      const valor = (produto.valor).toFixed(2);
-      const total = quantidade * valor;
-      subtotal = subtotal + total;
+      const codigoCompleto = produto.codigo;
+      const codigoProduto = produto.codigo.split("LOTE")[0].trim();
+      const quantidade = new Number(quantidadeItens.value);
+      const valor = produto.valor.toFixed(2);
+      const total = new Number((quantidade * valor).toFixed(2));
+      subtotal = parseFloat((parseFloat(subtotal) + total).toFixed(2)).toFixed(2);
       indiceDaLinha++;
       numeroProduto.value = indiceDaLinha;
       tabelaTransicao = [indiceDaLinha, codigoProduto, descricao, quantidade, valor, total];
+      quantidadeItens.value = "1";
       var linha = tabelaItensVenda.insertRow(0);
       for (j = 0; j < itensTela; j++) {
         var cell1 = linha.insertCell(j);
@@ -137,7 +115,8 @@ async function atualizaCampos(codProduto) {
       }
       subtotalCompra.value = subtotal;
     });
-  codigoProduto.setAttribute("autofocus", "autofocus");
+    codigoProduto.setAttribute("autofocus", "autofocus");
+    acao = "estoque";
 }
 
 function limpaTabela() {
@@ -149,23 +128,19 @@ function limpaTabela() {
 }
 
 function finalizaCompra() {
-  if(tabelaItensVenda.rows.length > 0){
-    const linhasTabela = [];
-    const linhas = tabelaItensVenda.rows;
-    for (let i = 0; i < linhas.length; i++) {
-      const cells = linhas[i].cells;
-      const dadosDaLinha = [];
-      for (let j = 0; j < cells.length; j++) {
-        dadosDaLinha.push(cells[j].innerHTML);
-      }
-      linhasTabela.push(dadosDaLinha);
+  const linhasTabela = [];
+  const linhas = tabelaItensVenda.rows;
+  for (let i = 0; i < linhas.length; i++) {
+    const cells = linhas[i].cells;
+    const dadosDaLinha = [];
+    for (let j = 0; j < cells.length; j++) {
+      dadosDaLinha.push(cells[j].innerHTML);
     }
-    localStorage.setItem("tabelaVenda", JSON.stringify(linhasTabela));
-    localStorage.setItem("subtotal", JSON.stringify(subtotalCompra.value))
-    location.href = 'finaliza-venda.html';
-  }else {
-    sairPagamento();
+    linhasTabela.push(dadosDaLinha);
   }
+  localStorage.setItem("tabelaVenda", JSON.stringify(linhasTabela));
+  localStorage.setItem("subtotal", JSON.stringify(subtotalCompra.value))
+  location.href = 'finaliza-venda.html';
 }
 
 codigoProduto.addEventListener("change", () => {

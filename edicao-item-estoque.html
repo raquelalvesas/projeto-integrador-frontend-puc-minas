@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MERCADO ALVES</title>
-    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="Styles/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
 </head>
-<body>
+<body class="tela_padrao">
     <header class="descricao_titulo">
         <p>EDIÇÃO DE ITEM DE ESTOQUE</p>
     </header>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="formulario_tres_campos">
                     <label class="titulo_caixa" for="lote">Lote
-                    <input class="caixa_cadastro_media" type="number" name="lote" id="lote">
+                    <input class="caixa_cadastro_media" type="text" name="lote" id="lote">
                     </div>
                     <div class="formulario_tres_campos">
                         <label class="titulo_caixa" for="valor">Valor de venda
@@ -48,7 +48,10 @@
                     </div>
                     <div class="formulario_tres_campos">
                         <label class="titulo_caixa" for="situacao">Status
-                        <input class="caixa_cadastro_pequena" type="text" name="situacao" id="situacao">
+                            <select id="situacao" name="situacao" size="1">
+                                <option value="Ativo">Ativo</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
                     </div>
                 </form>
             </div>

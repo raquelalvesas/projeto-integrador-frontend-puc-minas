@@ -2,22 +2,18 @@ const form = document.getElementById("acesso_usuario_senha");
 const statusCadastro = document.getElementById("usuario_cadastro");
 const statusComunicacao = document.getElementById("erro_autorizacao");
 
-function receberResposta(pedido) {
+function receberResposta(acao,pedido) {
   const queryParams = new URLSearchParams(pedido).toString();
-  const url = `http://localhost:3000?${queryParams}`;
-
+  const url = `https://mercadoalves-mercado.azuremicroservices.io/${acao}?${queryParams}`;
   return fetch(url, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
   })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Erro na requisição. Status: ${response.status}`);
-      }
-      return response.json().catch(() => response.text());
-    })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Erro na requisição. Status: ${response.status}`);
+    }
+    return response.json().catch(() => response.text());
+  })
     .then(data => {
       if (data) {
         return data;
@@ -35,17 +31,19 @@ form.addEventListener("submit", (evento) => {
   evento.preventDefault();
 
   const pedido = {
-    action: "verificaAcesso",
-    usuario: evento.target.elements['nome_usuario'].value,
+    login: evento.target.elements['nome_usuario'].value,
     senha: evento.target.elements['senha_usuario'].value
   };
+  const acao = "usuarios/verifica-acesso";
 
-  receberResposta(pedido)
-    .then(acesso => {
-      acesso = acesso.toUpperCase();
-      if (acesso === "ADMINISTRADOR" || acesso === "FUNCIONARIO") {
+  receberResposta(acao,pedido)
+    .then(responseData => {
+      const acesso = responseData.acesso;
+      const acessoUpperCase = acesso.toUpperCase();
+      if (acessoUpperCase  == "FUNCIONÁRIO") acessoUpperCase  = "FUNCIONARIO";
+      if (acessoUpperCase  === "ADMINISTRADOR" || acessoUpperCase  === "FUNCIONARIO") {
         localStorage.setItem("caixa", JSON.stringify(evento.target.elements['nome_usuario'].value));
-        localStorage.setItem("acesso", JSON.stringify(acesso));
+        localStorage.setItem("acesso", JSON.stringify(acessoUpperCase));
         location.href = 'tela-principal.html';
       } else {
         statusCadastro.classList.remove("funcao_esconder");

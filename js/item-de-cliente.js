@@ -4,21 +4,19 @@ var comprasCliente = document.getElementById("lista");
 var indexador = JSON.parse(localStorage.getItem("idDetalhe"));
 var tabelaTransicao = [];
 var itensTela = 4;
-var ordem = "ASC";
-var ordem_zero = "ASC";
-var ordem_um = "ASC";
-var ordem_dois = "ASC";
-var ordem_tres = "ASC";
+var ordem = "asc";
+var ordem_zero = "asc";
+var ordem_um = "asc";
+var ordem_dois = "asc";
+var ordem_tres = "asc";
 var coluna = "data";
+acao="clientes";
 
-function receberMensagem(pedido) {
+function receberMensagem(acao,pedido) {
   const queryParams = new URLSearchParams(pedido).toString();
-  const url = `http://localhost:3000?${queryParams}`;
+  const url = `https://mercadoalves-mercado.azuremicroservices.io/${acao}?${queryParams}`;
   return fetch(url, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
   });
 }
 
@@ -32,10 +30,10 @@ function limpaTabela() {
 
 function encontraItem() {
   const pedido = {
-    action: "localizaCliente",
     cpf: indexador
   };
-  receberMensagem(pedido)
+  acao = acao + "/localiza-cliente";
+  receberMensagem(acao,pedido)
     .then(resposta => resposta.json())
     .then(produto => {
       var linhaNome = detalhesCliente.insertRow(0);
@@ -65,6 +63,7 @@ function encontraItem() {
       var linhaNascimento = detalhesCliente.insertRow(6);
       var cellNascimento = linhaNascimento.insertCell(0);
       var dataNascimento = new Date (produto.nascimento);
+      dataNascimento = new Date(data.getTime() + data.getTimezoneOffset() * 60000);
       cellNascimento.innerHTML = "Data de nascimento: " + (dataNascimento.getDate() + "/" + (dataNascimento.getMonth()+1) + "/" + dataNascimento.getFullYear());
       cellNascimento.setAttribute("class", "nome_informacoes");
     });
@@ -78,12 +77,12 @@ function escolheLinha(id) {
 
 function listaCompras(coluna, ordem) {
   const pedido = {
-    action: "informacoesComprasCPF",
     cpf: indexador,
-    coluna: coluna,
-    ordem: ordem
+    sortOrder: ordem,
+    sortField: coluna
   };
-  receberMensagem(pedido)
+  acao = "vendas/venda-cpf"
+  receberMensagem(acao,pedido)
     .then(resposta => resposta.json())
     .then(compras => {
       tabelaTransicao = [];
@@ -93,7 +92,7 @@ function listaCompras(coluna, ordem) {
           const item = compras[key];
           const data = item.data;
           const hora = item.hora;
-          const valor = "R$ " + (item.valor).toFixed(2);
+          const valor = "R$ " + (item.valorTotal).toFixed(2);
           const cupom = item.cupom;
           const newRow = [data, hora, valor, cupom];
           tabelaTransicao.push(newRow);
@@ -107,8 +106,9 @@ function listaCompras(coluna, ordem) {
         for (let j = 0; j < itensTela; j++) {
           if (j == 0) {
             var data = new Date(tabelaTransicao[i][j]);
+            data = new Date(data.getTime() + data.getTimezoneOffset() * 60000);
             var mes = data.getMonth() + 1;
-            var dia = data.getDate();
+            var dia = data.getDate() + 1;
             var ano = data.getFullYear();
             tabelaTransicao[i][j] = dia + "/" + mes + "/" + ano;
           }
@@ -122,36 +122,36 @@ function listaCompras(coluna, ordem) {
 }
 
 organiza_col_zero.addEventListener("click", (event) => {
-  coluna = "v.data";
-  if (ordem_zero == "ASC") ordem_zero = "DESC";
-  else ordem_zero = "ASC";
+  coluna = "data";
+  if (ordem_zero == "asc") ordem_zero = "desc";
+  else ordem_zero = "asc";
   ordem = ordem_zero;
   limpaTabela();
   listaCompras(coluna, ordem);
 });
 
 organiza_col_um.addEventListener("click", (event) => {
-  coluna = "v.hora";
-  if (ordem_um == "ASC") ordem_um = "DESC";
-  else ordem_um = "ASC";
+  coluna = "hora";
+  if (ordem_um == "asc") ordem_um = "desc";
+  else ordem_um = "asc";
   ordem = ordem_um;
   limpaTabela();
   listaCompras(coluna, ordem);
 });
 
 organiza_col_dois.addEventListener("click", (event) => {
-  coluna = "v.valor";
-  if (ordem_dois == "ASC") ordem_dois = "DESC";
-  else ordem_dois = "ASC";
+  coluna = "valorTotal";
+  if (ordem_dois == "asc") ordem_dois = "desc";
+  else ordem_dois = "asc";
   ordem = ordem_dois;
   limpaTabela();
   listaCompras(coluna, ordem);
 });
 
 organiza_col_tres.addEventListener("click", (event) => {
-  coluna = "i.cupom";
-  if (ordem_tres == "ASC") ordem_tres = "DESC";
-  else ordem_tres = "ASC";
+  coluna = "cupom";
+  if (ordem_tres == "asc") ordem_tres = "desc";
+  else ordem_tres = "asc";
   ordem = ordem_tres;
   limpaTabela();
   listaCompras(coluna, ordem);

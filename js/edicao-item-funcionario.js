@@ -4,17 +4,16 @@ let novoCargo = document.getElementById("cargoFuncionario");
 let novoLogin = document.getElementById("loginFuncionario");
 let novaSenha = document.getElementById("senhaFuncionario");
 var indexador = JSON.parse(localStorage.getItem("idDetalhe"));
+let novoAcesso = document.getElementById("acesso");
+acao = "usuarios";
 
 encontraItem();
 
-function receberResposta(pedido) {
+function receberResposta(acao,pedido) {
   const queryParams = new URLSearchParams(pedido).toString();
-  const url = `http://localhost:3000?${queryParams}`;
+  const url = `https://mercadoalves-mercado.azuremicroservices.io/${acao}?${queryParams}`;
   return fetch(url, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
   })
   .then(response => {
     if (!response.ok) {
@@ -35,8 +34,8 @@ function receberResposta(pedido) {
   });
 }
 
-function mudarPedido(pedido) {
-  return fetch("http://localhost:3000", {
+function mudarPedido(acao,pedido) {
+  return fetch(`https://mercadoalves-mercado.azuremicroservices.io/${acao}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -47,30 +46,31 @@ function mudarPedido(pedido) {
 
 function encontraItem() {
   pedido = {
-    action: "localizaFuncionario",
-    parametro1: indexador,
+    id: indexador,
   };
-  receberResposta(pedido)
+  acao = acao + "/localiza-usuario";
+  receberResposta(acao,pedido)
     .then(produto => {
-      console.log(produto.nome);
       novoNome.value = produto.nome;
       novoID.value = produto.id;
       novoCargo.value = produto.cargo;
       novoLogin.value = produto.login;
       novaSenha.value = produto.senha;
+      novoAcesso.value = produto.acesso;
     });
 }
 
 function confirmaCadastro() {
   pedido = {
-    action: "modificaFuncionario",
     id: indexador,
     nome: novoNome.value,
     cargo: novoCargo.value,
     login: novoLogin.value,
-    senha: novaSenha.value
+    senha: novaSenha.value,
+    acesso: novoAcesso.value
   };
-  mudarPedido(pedido)
+  acao = "usuarios";
+  mudarPedido(acao,pedido)
     .then((resposta) => resposta.json())
     .then(statusCadastro => {
 

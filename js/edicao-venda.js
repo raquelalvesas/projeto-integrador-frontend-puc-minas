@@ -17,7 +17,7 @@ function atualizaCliente(nome, cpf) {
 }
 
 function atualizaSubtotal(valor) {
-  subtotalCompra.value = parseFloat(subtotalCompra.value) - parseFloat(valor).toFixed(2);
+  subtotalCompra.value = (parseFloat(subtotalCompra.value) - parseFloat(valor)).toFixed(2);
 }
 
 function carregarLista() {
@@ -71,7 +71,7 @@ function apagaItem() {
   for (let i = tamanho - 1; i >= 0; i--) {
     const rowIndex = linhasApagar[i];
     const linha = tabela.rows[rowIndex];
-    const valorItemApagado = parseFloat(linha.cells[4].innerHTML);
+    const valorItemApagado = parseFloat(linha.cells[5].innerHTML);
     valorTotalItensApagados += valorItemApagado;
     tabela.deleteRow(rowIndex);
   }

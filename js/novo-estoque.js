@@ -8,9 +8,10 @@ let valorVenda = document.getElementById("valor");
 let quantProduto = document.getElementById("quantidade");
 let estVenda = document.getElementById("situacao");
 var endFoto = "";
+var acao = "estoque";
 
-function sendMessage(pedido) {
-  return fetch('http://localhost:3000', {
+function enviarMensagem(acao,pedido) {
+  return fetch(`https://mercadoalves-mercado.azuremicroservices.io/${acao}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -30,11 +31,16 @@ function carregaFoto() {
 
 function confirmaCadastro() {
   if (nomeProduto && codProduto && vencProduto && loteProduto && valorVenda && quantProduto && estVenda) {
-    data = new Date(vencProduto.value);
-    vencProduto.value = (data.getFullYear()) + "-" + (data.getMonth() + 1) + "-" + (data.getDate());
+    var data = new Date(vencProduto.value);
+    data = new Date(data.getTime() + data.getTimezoneOffset() * 60000);
+    const year = data.getFullYear();
+    const month = (data.getMonth() + 1).toString().padStart(2, '0');
+    const day = data.getDate().toString().padStart(2, '0');
+
+    vencProduto.value = year + "-" + month + "-" + day;
+
     const pedido = {
-      action: "novoItemEstoque",
-      codigo: codProduto.value,
+      codigo: (codProduto.value + "LOTE" + loteProduto.value),
       produto: nomeProduto.value,
       lote: loteProduto.value,
       quantidade: quantProduto.value,
@@ -43,7 +49,7 @@ function confirmaCadastro() {
       status: estVenda.value,
       foto: novaFoto.src
     };
-    sendMessage(pedido)
+    enviarMensagem(acao,pedido)
       .then((resposta) => resposta.json())
       .then(statusCadastro => {
         if (statusCadastro.status == "itemCadastrado") {

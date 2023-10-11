@@ -8,17 +8,15 @@ let novoCidade = document.getElementById("cidade");
 let novoEstado = document.getElementById("estado");
 let novoCEP = document.getElementById("cep");
 var indexador = JSON.parse(localStorage.getItem("idDetalhe"));
+acao="clientes";
 
 encontraItem();
 
-function receberResposta(pedido) {
+function receberResposta(acao,pedido) {
   const queryParams = new URLSearchParams(pedido).toString();
-  const url = `http://localhost:3000?${queryParams}`;
+  const url = `https://mercadoalves-mercado.azuremicroservices.io/${acao}?${queryParams}`;
   return fetch(url, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
   })
   .then(response => {
     if (!response.ok) {
@@ -39,8 +37,8 @@ function receberResposta(pedido) {
   });
 }
 
-function mudarPedido(pedido) {
-  return fetch("http://localhost:3000", {
+function mudarPedido(acao,pedido) {
+  return fetch(`https://mercadoalves-mercado.azuremicroservices.io/${acao}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -51,13 +49,15 @@ function mudarPedido(pedido) {
 
 function encontraItem() {
   pedido = {
-    action: "localizaCliente",
     cpf: indexador,
   };
-  receberResposta(pedido)
+  acao = acao + "/localiza-cliente";
+
+  receberResposta(acao,pedido)
     .then(cliente => {
       novoNome.value = cliente.nome;
       data = new Date(cliente.nascimento);
+      data = new Date(data.getTime() + data.getTimezoneOffset() * 60000);
       novoNascimento.value = (data.getFullYear()) + "-" + (data.getMonth() + 1) + "-" + (data.getDate());
       novoCPF.value = indexador;
       novoTelefone.value = cliente.telefone;
@@ -70,10 +70,14 @@ function encontraItem() {
 }
 
 function confirmaCadastro() {
-  data = new Date(novoNascimento.value);
-  novoNascimento.value = (data.getFullYear()) + "-" + (data.getMonth() + 1) + "-" + (data.getDate());
+  var data = new Date(novoNascimento.value);
+  data = new Date(data.getTime() + data.getTimezoneOffset() * 60000);
+  const year = data.getFullYear();
+  const month = (data.getMonth() + 1).toString().padStart(2, '0');
+  const day = data.getDate().toString().padStart(2, '0');
+
+  novoNascimento.value = year + "-" + month + "-" + day;
   pedido = {
-    action: "modificaCliente",
     nome: novoNome.value,
     nascimento: novoNascimento.value,
     cpf: novoCPF.value,
@@ -84,7 +88,8 @@ function confirmaCadastro() {
     estado: novoEstado.value,
     cep: novoCEP.value
   };
-  mudarPedido(pedido)
+  acao = "clientes";
+  mudarPedido(acao,pedido)
     .then((resposta) => resposta.json())
     .then(statusCadastro => {
       if (statusCadastro.message == "modificado") {
